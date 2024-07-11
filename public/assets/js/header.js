@@ -29,6 +29,8 @@ div = `
                         <ul class="dropdown-menu">
                           <li><a class="dropdown-item" href="Login">Logout</a></li>
                           <li><a class="dropdown-item" href="profile">Profile</a></li>
+                          <li><a class="dropdown-item" href="addproduct">Add Product</a></li>
+                          <li><a class="dropdown-item" href="shop">Shop</a></li>
                           <li><hr class="dropdown-divider"></li>
                           <li><a class="dropdown-item" href="#">Something else here</a></li>
                         </ul>

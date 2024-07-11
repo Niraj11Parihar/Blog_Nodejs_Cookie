@@ -20,14 +20,14 @@
       rel="stylesheet"
     />
     <!-- css  -->
-    <link rel="stylesheet" href="../assets/css/style.css" />
+    <link rel="stylesheet" href="../assets/css/style.css"/>
   </head>
   <body>
     <section class="page">
       <div id="header"></div>
       <div class="logo-head d-flex justify-content-center align-items-center">
         <div class="logo col-1">
-          <img src="../assets/images/logo (2).png" class="img-fluid" alt="" />
+          <img src="../assets/images/logo (2).png" class="img-fluid" alt=""/>
         </div>
       </div>
 
@@ -89,16 +89,19 @@
         <center>
           <div class="container-blog">
             <div class="blog-content">
-              <% data.map((user)=>{ %>
-              <h3 name="title"><%= user.title %></h3>
-              <div class="date mb-3">
-                <%= new Date(user.date).toLocaleDateString('en-IN') %>
-              </div>
-              <img src="../<%= user.image %>" alt="" width="100%" />
-              <div class="description mt-5">
-                <p><%= user.description %></p>
-              </div>
-              <% }) %>
+              <% if (Array.isArray(user) && user.length) { %>
+                <% user.forEach((user) => { %>
+                  <h3 name="title"><%= user.name %></h3>
+                  <div class="date mb-3">
+                    <%= user.username %>
+                  </div>
+                  <div class="description mt-5">
+                    <p><%= user.email %></p>
+                  </div>
+                <% }) %>
+              <% } else { %>
+                <p>No users found.</p>
+              <% } %>
             </div>
           </div>
         </center>

@@ -1,9 +1,10 @@
 const bcrypt = require("bcrypt");
 const userModel = require("../models/user.Schema");
 const blogModel = require("../models/Blog.Schema");
-const passport = require("../config/passportconfig");
-const fs= require("fs")
-let path = require("path")
+const productModel = require("../models/product.Schema");
+const passport = require("../middleware/passportconfig");
+const fs = require("fs");
+let path = require("path");
 
 const loginpage = async (req, res) => {
   try {
@@ -15,7 +16,7 @@ const loginpage = async (req, res) => {
 };
 
 const loginProcess = async (req, res, next) => {
-  passport.authenticate('local', async (err, user, info) => {
+  passport.authenticate("local", async (err, user, info) => {
     if (err) {
       return next(err);
     }
@@ -64,20 +65,21 @@ const signupProcess = async (req, res) => {
 
     if (existingUser) {
       res.send("Username already exists");
-      return false
+      return false;
     }
-     if (existingEmail) {
+    if (existingEmail) {
       res.send("Email already exists");
       return false;
-    } 
+    }
 
-      const hashedPassword = await bcrypt.hash(password, 10);
-      await userModel.create({
-        name,
-        username,
-        email,
-        password: hashedPassword,
-    })
+    const hashedPassword = await bcrypt.hash(password, 10);
+    await userModel.create({
+      name,
+      username,
+      email,
+      password: hashedPassword,
+    });
+    console.log(password)
     res.redirect("/login");
   } catch (error) {
     console.log(error);
@@ -87,7 +89,6 @@ const signupProcess = async (req, res) => {
 
 const home = async (req, res) => {
   try {
-    console.log("home controller");
     let data = await blogModel.find({});
     res.render("blogPage", { data });
   } catch (error) {
@@ -127,7 +128,7 @@ const insertData = async (req, res) => {
       }
 
       if (req.file) {
-        if (blog.image && typeof blog.image === 'string') {
+        if (blog.image && typeof blog.image === "string") {
           fs.unlinkSync(blog.image); // Delete the old image if it exists
         }
         blog.image = image;
@@ -142,7 +143,9 @@ const insertData = async (req, res) => {
       res.redirect("/viewblog");
     } catch (err) {
       console.log(err);
-      res.status(500).send("The server cannot process the request to update the blog!");
+      res
+        .status(500)
+        .send("The server cannot process the request to update the blog!");
     }
   } else {
     if (!image) {
@@ -159,11 +162,12 @@ const insertData = async (req, res) => {
       res.redirect("/blogPage");
     } catch (error) {
       console.log(error);
-      res.status(500).send("The server cannot process the request to create the blog!");
+      res
+        .status(500)
+        .send("The server cannot process the request to create the blog!");
     }
   }
 };
-
 
 const deleteData = async (req, res) => {
   const { id } = req.params;
@@ -186,6 +190,25 @@ const deleteData = async (req, res) => {
   }
 };
 
+const profile = async (req, res) => {
+  try {
+    const user = req.user;
+    res.render("profile", { user });
+  } catch (error) {
+    console.log(error)
+    res.send("Unable to get profile")
+  }
+};
+
+const addproduct = async (req,res) => {
+  try {
+    const product = await productModel.find({});
+    res.render("addproduct", { product });
+  } catch (error) {
+    console.log(error)
+    res.send("Unable to get profile")
+  }
+}
 
 module.exports = {
   loginpage,
@@ -198,4 +221,6 @@ module.exports = {
   Logout,
   loginProcess,
   home,
+  profile,
+  addproduct
 };

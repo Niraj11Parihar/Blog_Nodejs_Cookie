@@ -1,4 +1,6 @@
 const express = require("express");
+
+
 const {
   loginpage,
   Logout,
@@ -10,9 +12,13 @@ const {
   deleteData,
   signup,
   signupProcess,
+  profile,
+  addproduct,
 } = require("../controllers/controllers");
+
+
 const multer = require('multer');
-const passport = require('../config/passportConfig');
+const passport = require('../middleware/passportconfig');
 
 const router = express.Router();
 
@@ -37,5 +43,7 @@ router.post("/editblog", uploads, insertData);
 router.get("/addblog", addblog);
 router.get("/viewblog", viewblog);
 router.get("/deleteData/:id", deleteData);
+router.get("/profile",profile)
+router.get("/addproduct",addproduct)
 
 module.exports = router;

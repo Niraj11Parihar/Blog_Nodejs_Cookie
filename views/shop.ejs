@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>shop</title>
+</head>
+<body>
+
+    <section>
+        <div class="parent">
+            
+        </div>
+    </section>
+
+    <script>
+        let uimaker = (data)=>{
+            document.getElementById('parent').innerHTML = ''
+            data.map((ele)=>{
+                let div = document.createElement('div');
+                let image = document.createElement('img');
+                image.src = ele.image;
+                let title = document.createElement('h2');
+                title.innerHTML = ele.title;
+                let price = document.createElement('p');
+                price.innerHTML = ele.price;
+                let desc = document.createElement('p');
+                desc.innerHTML = ele.description;
+                let btn1 = document.createElement('button');
+                btn1.innerHTML = "delete";
+                btn1.addEventListener('click',()=> deleteData(ele._id))
+                let btn2 = document.createElement('button');
+                btn2.innerHTML = "Edit";
+                btn2.addEventListener('click',()=> editData(ele));
+                div.append(image,title,price,desc,btn1,btn2);
+
+                document.getElementById('parent').append(div);
+            })
+        }
+
+        let getdata = async () => {
+            try {
+                let req = await fetch('/product/data');
+                let res = await req.json();
+                console.log(res);
+                uimaker(res);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+
+        getdata();
+    </script>
+</body>
+</html>
