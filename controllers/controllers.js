@@ -6,14 +6,14 @@ const passport = require("../middleware/passportconfig");
 const fs = require("fs");
 let path = require("path");
 
-const loginpage = async (req, res) => {
-  try {
-    res.render("Login");
-  } catch (error) {
-    console.log(error);
-    res.send("Unable to render login page");
-  }
-};
+// const loginpage = async (req, res) => {
+//   try {
+//     res.render("Login");
+//   } catch (error) {
+//     console.log(error);
+//     res.send("Unable to render login page");
+//   }
+// };
 
 const loginProcess = async (req, res, next) => {
   passport.authenticate("local", async (err, user, info) => {
@@ -44,12 +44,20 @@ const signup = async (req, res) => {
 
 const Logout = async (req, res) => {
   try {
-    req.logout((err) => {
-      if (err) {
-        return next(err);
-      }
-      res.redirect("/login");
+    req.logOut((err)=>{
+      if(err)
+        {
+          console.log(err);
+        }
+        else{
+          res.redirect("/");
+        }
     });
+
+      // req.logout();
+      // req.session.destroy();
+      // res.clearCookie("connect.sid");
+      // res.render("login");
   } catch (error) {
     console.log(error);
     res.send("Issue in logout");
@@ -210,6 +218,15 @@ const addproduct = async (req,res) => {
   }
 }
 
+let shopPage = async (req,res) => {
+  try {
+    let data = await productModel.find({})
+  return res.render("shop",{data}); 
+  } catch (error) {
+    res.status(404).send(error.message)
+  }
+}
+
 module.exports = {
   loginpage,
   insertData,
@@ -222,5 +239,6 @@ module.exports = {
   loginProcess,
   home,
   profile,
-  addproduct
+  addproduct,
+  shopPage
 };

@@ -27,7 +27,7 @@ div = `
                           Dropdown
                         </a>
                         <ul class="dropdown-menu">
-                          <li><a class="dropdown-item" href="Login">Logout</a></li>
+                          <li><a class="dropdown-item" href="/Logout">Logout</a></li>
                           <li><a class="dropdown-item" href="profile">Profile</a></li>
                           <li><a class="dropdown-item" href="addproduct">Add Product</a></li>
                           <li><a class="dropdown-item" href="shop">Shop</a></li>
