@@ -32,9 +32,8 @@ const fileUpload = multer.diskStorage({
 });
 const uploads = multer({ storage: fileUpload }).single('image');
 
-router.get("/",home);
 router.post("/loginprocess", loginProcess);
-router.get("/login", Logout);
+router.get("/", loginpage);
 router.get("/Logout", Logout);
 router.get("/blogPage", home);
 router.get("/signup", signup);

@@ -21,8 +21,30 @@
     />
     <!-- css  -->
     <link rel="stylesheet" href="../assets/css/style.css" />
+
+    <style>
+      .alert {
+        position: fixed;
+        top: 20px;
+        left: 50%; /* Position it halfway from the left */
+        transform: translateX(-50%); /* Offset it by half its own width */
+        text-align: center;
+        width: auto; /* Adjust the width as needed, or set a specific width */
+        max-width: 90%; /* Ensures it doesn't go beyond the screen width */
+        padding: 15px;
+        background-color: #4caf50; /* Green */
+        color: white;
+        opacity: 1;
+        transition: opacity 0.6s; /* Fade out effect */
+        z-index: 1000;
+      }
+    </style>
   </head>
   <body>
+    <% if (message.length > 0) { %>
+    <div class="alert alert-success" id="flash"><%= message %></div>
+    <% } %>
+
     <section class="page">
       <div id="header"></div>
       <div class="logo-head d-flex justify-content-center align-items-center">
@@ -94,7 +116,12 @@
               <div class="date mb-3">
                 <%= new Date(user.date).toLocaleDateString('en-IN') %>
               </div>
-              <img src="../<%= user.image %>" alt="" width="100%" height="600px"/>
+              <img
+                src="../<%= user.image %>"
+                alt=""
+                width="100%"
+                height="600px"
+              />
               <div class="description mt-5">
                 <p><%= user.description %></p>
               </div>
@@ -110,10 +137,30 @@
     <!-- slider  -->
     <script src="../assets/js/slider.js"></script>
     <!-- bootstrap  -->
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- header.js  -->
     <script src="../assets/js/header.js"></script>
+    <!-- flash  -->
+    <script>
+      window.onload = function () {
+        var flash = document.getElementById('flash')
+
+        flash.style.opacity = '1'
+
+        setTimeout(() => {
+          flash.style.opacity = '0'
+        }, 1500)
+
+        setTimeout(() => {
+          flash.remove()
+        }, 1500)
+      }
+
+      function toggleSearch() {
+      var searchContainer = document.querySelector('.search-container');
+      searchContainer.classList.toggle('active');
+    }
+    
+    </script>
   </body>
 </html>

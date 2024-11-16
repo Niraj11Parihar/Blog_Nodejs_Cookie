@@ -1,4 +1,4 @@
-const bcrypt = require("bcrypt");
+  const bcrypt = require("bcrypt"); 
 const userModel = require("../models/user.Schema");
 const blogModel = require("../models/Blog.Schema");
 const productModel = require("../models/product.Schema");
@@ -6,14 +6,14 @@ const passport = require("../middleware/passportconfig");
 const fs = require("fs");
 let path = require("path");
 
-// const loginpage = async (req, res) => {
-//   try {
-//     res.render("Login");
-//   } catch (error) {
-//     console.log(error);
-//     res.send("Unable to render login page");
-//   }
-// };
+const loginpage = async (req, res) => {
+  try {
+    res.render("Login");
+  } catch (error) {
+    console.log(error);
+    res.send("Unable to render login page");
+  }
+};
 
 const loginProcess = async (req, res, next) => {
   passport.authenticate("local", async (err, user, info) => {
@@ -27,8 +27,9 @@ const loginProcess = async (req, res, next) => {
       if (err) {
         return next(err);
       }
+      req.flash("logged-in","Successfully Logged-in")
       let data = await blogModel.find({});
-      return res.render("blogPage", { data });
+      return res.render("blogPage", { data, message: req.flash("logged-in")});
     });
   })(req, res, next);
 };
@@ -44,23 +45,26 @@ const signup = async (req, res) => {
 
 const Logout = async (req, res) => {
   try {
-    req.logOut((err)=>{
-      if(err)
-        {
-          console.log(err);
-        }
-        else{
-          res.redirect("/");
-        }
-    });
+    req.logOut((err) => {
+      if (err) {
+        console.log(err);
+        return res.status(500).send("Logout failed");
+      }
 
-      // req.logout();
-      // req.session.destroy();
-      // res.clearCookie("connect.sid");
-      // res.render("login");
+      // Destroy the session
+      req.session.destroy((err) => {
+        if (err) {
+          console.log(err);
+          return res.status(500).send("Failed to destroy session");
+        }
+        res.clearCookie("connect.sid"); 
+
+        res.render("Login");
+      });
+    });
   } catch (error) {
     console.log(error);
-    res.send("Issue in logout");
+    res.status(500).send("An error occurred");
   }
 };
 
@@ -98,7 +102,7 @@ const signupProcess = async (req, res) => {
 const home = async (req, res) => {
   try {
     let data = await blogModel.find({});
-    res.render("blogPage", { data });
+    res.render("blogPage", { data, message: req.flash("logged-in")});
   } catch (error) {
     console.log("Unable to render home page");
     res.status(404).send("The server cannot find the requested resource!");
@@ -211,7 +215,8 @@ const profile = async (req, res) => {
 const addproduct = async (req,res) => {
   try {
     const product = await productModel.find({});
-    res.render("addproduct", { product });
+    req.flash("product-added","Product Added Successfully!")
+    res.render("addproduct", { product, message : req.flash("product-added") });
   } catch (error) {
     console.log(error)
     res.send("Unable to get profile")
@@ -226,6 +231,8 @@ let shopPage = async (req,res) => {
     res.status(404).send(error.message)
   }
 }
+
+
 
 module.exports = {
   loginpage,
