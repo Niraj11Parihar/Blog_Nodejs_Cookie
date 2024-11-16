@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function() {
   let header = document.getElementById("header");
 
-  let div = `
+  let element = `
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
       <div class="container-fluid">
         <div class="online-links">
@@ -73,6 +73,6 @@ document.addEventListener("DOMContentLoaded", function() {
     </nav>
   `;
 
-  header.innerHTML = div;
+  header.innerHTML = element;
 
 }); 

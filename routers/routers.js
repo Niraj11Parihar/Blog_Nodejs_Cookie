@@ -19,7 +19,6 @@ const {
 
 
 const multer = require('multer');
-const passport = require('../middleware/passportconfig');
 const router = express.Router();
 
 const fileUpload = multer.diskStorage({

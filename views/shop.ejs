@@ -32,30 +32,81 @@
   </section>
 
   <script>
-    let uimaker = data => {
-      document.getElementById('product-parent').innerHTML = ''
-      data.map(ele => {
-        let div = document.createElement('div')
-        let image = document.createElement('img')
-        image.src = ele.image
-        let title = document.createElement('h2')
-        title.innerHTML = ele.title
-        let price = document.createElement('p')
-        price.innerHTML = ele.price
-        let desc = document.createElement('p')
-        desc.innerHTML = ele.description
-        let btn1 = document.createElement('button')
-        btn1.innerHTML = 'delete'
-        btn1.addEventListener('click', () => deleteData(ele._id))
-        let btn2 = document.createElement('button')
-        btn2.innerHTML = 'Edit'
-        btn2.addEventListener('click', () => editData(ele))
-        div.append(image, title, price, desc, btn1, btn2)
+  let uimaker = (data) => {
+  document.getElementById('product-parent').innerHTML = ''; // Clear existing content
 
-        document.getElementById('product-parent').append(div)
-        
-      })
-    }
+  // Parent container styling
+  const parent = document.getElementById('product-parent');
+  parent.style.display = 'flex';
+  parent.style.flexWrap = 'wrap'; // Allows wrapping to the next row
+  parent.style.justifyContent = 'space-between'; // Space between cards
+  parent.style.gap = '1rem'; // Spacing between rows and columns
+
+  data.map((ele) => {
+    let div = document.createElement('div');
+    div.style.border = '1px solid #ddd';
+    div.style.borderRadius = '8px';
+    div.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
+    div.style.padding = '1rem';
+    div.style.margin = '10px';
+    div.style.textAlign = 'center';
+    div.style.width = '23%'; // Ensures 4 cards fit per row
+    div.style.height = '350px'; // Fixed height for all cards
+    div.style.boxSizing = 'border-box'; // Includes padding in width calculation
+
+    let image = document.createElement('img');
+    image.src = ele.image;
+    image.style.width = '100%';
+    image.style.height = '180px'; // Fixed height for images
+    image.style.objectFit = 'cover'; // Ensures the image scales proportionally and fills the space
+    image.style.borderRadius = '8px 8px 0 0';
+
+    let title = document.createElement('h2');
+    title.innerHTML = ele.title;
+    title.style.fontSize = '1rem';
+    title.style.fontWeight = 'bold';
+    title.style.margin = '10px 0';
+
+    let price = document.createElement('p');
+    price.innerHTML = `$${ele.price}`;
+    price.style.color = '#28a745';
+    price.style.fontWeight = 'bold';
+
+    let desc = document.createElement('p');
+    desc.innerHTML = ele.description;
+    desc.style.color = '#555';
+    desc.style.margin = '10px 0';
+    desc.style.overflow = 'hidden'; // Prevents overflowing text
+    desc.style.textOverflow = 'ellipsis'; // Adds ellipsis for long text
+    desc.style.whiteSpace = 'nowrap'; // Keeps text in a single line
+
+    let btn1 = document.createElement('button');
+    btn1.innerHTML = 'Delete';
+    btn1.style.backgroundColor = '#dc3545';
+    btn1.style.color = '#fff';
+    btn1.style.border = 'none';
+    btn1.style.padding = '0.5rem 1rem';
+    btn1.style.margin = '5px';
+    btn1.style.borderRadius = '4px';
+    btn1.style.cursor = 'pointer';
+    btn1.addEventListener('click', () => deleteData(ele._id));
+
+    let btn2 = document.createElement('button');
+    btn2.innerHTML = 'Edit';
+    btn2.style.backgroundColor = '#007bff';
+    btn2.style.color = '#fff';
+    btn2.style.border = 'none';
+    btn2.style.padding = '0.5rem 1rem';
+    btn2.style.margin = '5px';
+    btn2.style.borderRadius = '4px';
+    btn2.style.cursor = 'pointer';
+    btn2.addEventListener('click', () => editData(ele));
+
+    div.append(image, title, price, desc, btn1, btn2);
+    parent.append(div);
+  });
+};
+
 
     let deleteData = (id) => {
         fetch(`/product/delete/${id}`,{
