@@ -17,128 +17,130 @@
 </head>
 <body>
   <section>
-    <div id="header"></div>
-    <div class="logo-head d-flex justify-content-center align-items-center">
-      <div class="logo col-1">
-        <img src="../assets/images/logo (2).png" class="img-fluid" alt="" />
+    <header class="logo-head">
+      <div
+        class="container d-flex justify-content-between align-items-center py-3"
+      >
+        <!-- Logo Section -->
+        <div id="header"></div>
+
+        <!-- Navigation Section -->
+        <div id="header"></div>
       </div>
-    </div>
+    </header> 
 
     <div class="product-main">
       <div class="container">
         <div id="product-parent"></div>
       </div>
     </div>
+
+    <div class="separator-line">
+      <div class="line"></div>
+      <div class="social-icons">
+        <a href="https://facebook.com" target="_blank">
+          <i class="fab fa-facebook-f"></i>
+        </a>
+        <a href="https://twitter.com" target="_blank">
+          <i class="fab fa-twitter"></i>
+        </a>
+        <a href="https://instagram.com" target="_blank">
+          <i class="fab fa-instagram"></i>
+        </a>
+        <a href="https://linkedin.com" target="_blank">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+      </div>
+      <div class="line"></div>
+    </div>
+
+    <section class="about-section py-5">
+      <div class="container">
+        <div class="row">
+          <!-- About Me Section -->
+          <div class="col-md-3">
+            <h5>About Me</h5>
+            <div class="about-me">
+              <img
+                src="../assets/images/about-small.jpg"
+                alt="About Me"
+                width="80%"
+                class="img-fluid mb-3"
+              />
+              <p>
+                Hello. I am a freelance writer. I live in a small town somewhere
+                in the world.
+              </p>
+            </div>
+          </div>
+
+          <!-- Tags Section -->
+          <div class="col-md-3">
+            <h5>Tags</h5>
+            <div class="tags">
+              <span class="tag">adaptive</span>
+              <span class="tag">client</span>
+              <span class="tag">css</span>
+              <span class="tag">design</span>
+              <span class="tag">html</span>
+              <span class="tag">jungle</span>
+              <span class="tag">layout</span>
+              <span class="tag">mobile</span>
+              <span class="tag">photo</span>
+              <span class="tag">responsive</span>
+              <span class="tag">sound</span>
+              <span class="tag">think</span>
+              <span class="tag">typography</span>
+              <span class="tag">web design</span>
+            </div>
+          </div>
+
+          <!-- Trending Section -->
+          <div class="col-md-3">
+            <h5>Latest</h5>
+            <div class="trending">
+              <% // Sort by date and take the latest 3 entries const
+              trendingItems = blogData.sort((a, b) => new Date(b.date) - new
+              Date(a.date)).slice(0, 2); trendingItems.map((item) => { %>
+              <div
+                class="trending-post mb-3 d-flex align-items-center justify-content-evenly"
+              >
+                <img
+                  src="../<%= item.image %>"
+                  alt="Trending Post"
+                  height="auto"
+                  width="40%"
+                  class="img-fluid rounded mb-2 col-5"
+                />
+                <div class="fs-6 col-5">
+                  <p class="p-0 m-0"><%= item.title %></p>
+                  <small
+                    ><%= new Date(item.date).toLocaleDateString('en-IN')
+                    %></small
+                  >
+                </div>
+              </div>
+              <% }) %>
+            </div>
+          </div>
+
+          <!-- Recent Posts Section -->
+          <div class="col-md-3">
+            <h5>Recent Posts</h5>
+            <ul class="recent-posts">
+              <% const recentItems = blogData.sort((a, b ) => new Date(b.date) - new
+              Date(a.date)).slice(0, 7); recentItems.map((item) => { %>
+              <li><%= item.title %></li>
+              <% }) %>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
   </section>
 
-  <script>
-  let uimaker = (data) => {
-  document.getElementById('product-parent').innerHTML = ''; // Clear existing content
-
-  // Parent container styling
-  const parent = document.getElementById('product-parent');
-  parent.style.display = 'flex';
-  parent.style.flexWrap = 'wrap'; // Allows wrapping to the next row
-  parent.style.justifyContent = 'space-between'; // Space between cards
-  parent.style.gap = '1rem'; // Spacing between rows and columns
-
-  data.map((ele) => {
-    let div = document.createElement('div');
-    div.style.border = '1px solid #ddd';
-    div.style.borderRadius = '8px';
-    div.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
-    div.style.padding = '1rem';
-    div.style.margin = '10px';
-    div.style.textAlign = 'center';
-    div.style.width = '23%'; // Ensures 4 cards fit per row
-    div.style.height = '350px'; // Fixed height for all cards
-    div.style.boxSizing = 'border-box'; // Includes padding in width calculation
-
-    let image = document.createElement('img');
-    image.src = ele.image;
-    image.style.width = '100%';
-    image.style.height = '180px'; // Fixed height for images
-    image.style.objectFit = 'cover'; // Ensures the image scales proportionally and fills the space
-    image.style.borderRadius = '8px 8px 0 0';
-
-    let title = document.createElement('h2');
-    title.innerHTML = ele.title;
-    title.style.fontSize = '1rem';
-    title.style.fontWeight = 'bold';
-    title.style.margin = '10px 0';
-
-    let price = document.createElement('p');
-    price.innerHTML = `$${ele.price}`;
-    price.style.color = '#28a745';
-    price.style.fontWeight = 'bold';
-
-    let desc = document.createElement('p');
-    desc.innerHTML = ele.description;
-    desc.style.color = '#555';
-    desc.style.margin = '10px 0';
-    desc.style.overflow = 'hidden'; // Prevents overflowing text
-    desc.style.textOverflow = 'ellipsis'; // Adds ellipsis for long text
-    desc.style.whiteSpace = 'nowrap'; // Keeps text in a single line
-
-    let btn1 = document.createElement('button');
-    btn1.innerHTML = 'Delete';
-    btn1.style.backgroundColor = '#dc3545';
-    btn1.style.color = '#fff';
-    btn1.style.border = 'none';
-    btn1.style.padding = '0.5rem 1rem';
-    btn1.style.margin = '5px';
-    btn1.style.borderRadius = '4px';
-    btn1.style.cursor = 'pointer';
-    btn1.addEventListener('click', () => deleteData(ele._id));
-
-    let btn2 = document.createElement('button');
-    btn2.innerHTML = 'Edit';
-    btn2.style.backgroundColor = '#007bff';
-    btn2.style.color = '#fff';
-    btn2.style.border = 'none';
-    btn2.style.padding = '0.5rem 1rem';
-    btn2.style.margin = '5px';
-    btn2.style.borderRadius = '4px';
-    btn2.style.cursor = 'pointer';
-    btn2.addEventListener('click', () => editData(ele));
-
-    div.append(image, title, price, desc, btn1, btn2);
-    parent.append(div);
-  });
-};
-
-
-    let deleteData = (id) => {
-        fetch(`/product/delete/${id}`,{
-            method : "DELETE"
-        }).then(()=>getdata())
-    }
-
-    let updateData = (id) => {
-      fetch(`/product/update/${id}`,{
-          method : "PATCH"
-      }).then(()=>getdata())
-    };
-
-
  
-
-
-
-
-    let getdata = async () => {
-      try {
-        let req = await fetch('/product/data')
-        let res = await req.json()
-        console.log(res)
-        uimaker(res)
-      } catch (error) {
-        console.error('Error fetching data:', error)
-      }
-    }
-
-    getdata()
-  </script>
 
   <!-- swiper slider  -->
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>

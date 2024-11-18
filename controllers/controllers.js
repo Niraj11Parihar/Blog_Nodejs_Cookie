@@ -226,7 +226,8 @@ const addproduct = async (req,res) => {
 let shopPage = async (req,res) => {
   try {
     let data = await productModel.find({})
-  return res.render("shop",{data}); 
+    let blogData = await blogModel.find({})
+  return res.render("shop",{data, blogData}); 
   } catch (error) {
     res.status(404).send(error.message)
   }
