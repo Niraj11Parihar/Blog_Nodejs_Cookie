@@ -1,11 +1,10 @@
 const productModel = require("../models/product.Schema");
 
 const addproduct = async (req, res) => {
-        const {title, price, description, image} = req.body;
+        const {title, author, price, description, image} = req.body;
     try {
          const pdata = await productModel.create(req.body)
-        console.log(pdata)
-        res.send("Product added");
+         res.redirect("/shop");
     } catch (error) {
         console.error(error);
         res.status(500).send('Issue while adding the product');

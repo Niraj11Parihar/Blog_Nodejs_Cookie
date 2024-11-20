@@ -1,9 +1,12 @@
 const mongoose = require('mongoose')
 
 const productSchema = new mongoose.Schema({
-    title : {
+    bookname : {
         type : String,
         // required : true
+    },
+    author :{
+        type: String,
     },
     price : {
         type : Number,

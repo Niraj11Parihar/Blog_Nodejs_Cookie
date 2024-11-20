@@ -2,13 +2,13 @@
 const userModel = require("../models/user.Schema");
 const blogModel = require("../models/Blog.Schema");
 const productModel = require("../models/product.Schema");
-const passport = require("../middleware/passportconfig");
+const jwt = require('jsonwebtoken');
 const fs = require("fs");
-let path = require("path");
+const secretKey = 'your-secret-key';
 
 const loginpage = async (req, res) => {
   try {
-    res.render("Login");
+    res.render("login");
   } catch (error) {
     console.log(error);
     res.send("Unable to render login page");
@@ -16,23 +16,37 @@ const loginpage = async (req, res) => {
 };
 
 const loginProcess = async (req, res, next) => {
-  passport.authenticate("local", async (err, user, info) => {
-    if (err) {
-      return next(err);
-    }
+  try {
+    const { username, password } = req.body;
+
+    const user = await userModel.findOne({ username });
+
     if (!user) {
-      return res.status(401).send(info.message);
+      return res.status(401).json({ message: "User not found" });
     }
-    req.logIn(user, async (err) => {
-      if (err) {
-        return next(err);
-      }
-      req.flash("logged-in","Successfully Logged-in")
-      let data = await blogModel.find({});
-      return res.render("blogPage", { data, message: req.flash("logged-in")});
-    });
-  })(req, res, next);
+
+    const isMatch = await bcrypt.compare(password, user.password);
+
+    if (!isMatch) {
+      return res.status(401).json({ message: "Invalid credentials" });
+    }
+
+    // Generate a JWT token
+    const token = jwt.sign(
+      { id: user._id, email: user.email, username: user.username, password: user.password, name: user.name },
+      secretKey,
+      { expiresIn: '5h' }
+    );
+
+    // Store the token in a cookie
+    res.cookie('token', token, { httpOnly: true, maxAge: 18000000 }); 
+
+    res.redirect('/');
+  } catch (err) {
+    return next(err);
+  }
 };
+
 
 const signup = async (req, res) => {
   try {
@@ -45,28 +59,23 @@ const signup = async (req, res) => {
 
 const Logout = async (req, res) => {
   try {
-    req.logOut((err) => {
+    // Destroy the session
+    req.session.destroy((err) => {
       if (err) {
         console.log(err);
-        return res.status(500).send("Logout failed");
+        return res.status(500).send("Failed to destroy session");
       }
 
-      // Destroy the session
-      req.session.destroy((err) => {
-        if (err) {
-          console.log(err);
-          return res.status(500).send("Failed to destroy session");
-        }
-        res.clearCookie("connect.sid"); 
+      res.clearCookie("token"); 
 
-        res.render("Login");
-      });
+      res.redirect("/login");
     });
   } catch (error) {
     console.log(error);
     res.status(500).send("An error occurred");
   }
 };
+
 
 const signupProcess = async (req, res) => {
   const { name, username, email, password } = req.body;
@@ -91,7 +100,7 @@ const signupProcess = async (req, res) => {
       email,
       password: hashedPassword,
     });
-    console.log(password)
+    req.flash('logged-in', 'Successfully logged in!');
     res.redirect("/login");
   } catch (error) {
     console.log(error);
@@ -102,10 +111,10 @@ const signupProcess = async (req, res) => {
 const home = async (req, res) => {
   try {
     let data = await blogModel.find({});
-    res.render("blogPage", { data, message: req.flash("logged-in")});
+    return res.render("blogPage",{data});
   } catch (error) {
     console.log("Unable to render home page");
-    res.status(404).send("The server cannot find the requested resource!");
+   return res.status(404).send("The server cannot find the requested resource!");
   }
 };
 
@@ -171,7 +180,7 @@ const insertData = async (req, res) => {
         image,
         description,
       });
-      res.redirect("/blogPage");
+      res.redirect("/");
     } catch (error) {
       console.log(error);
       res
@@ -223,7 +232,7 @@ const addproduct = async (req,res) => {
   }
 }
 
-let shopPage = async (req,res) => {
+const shopPage = async (req,res) => {
   try {
     let data = await productModel.find({})
     let blogData = await blogModel.find({})
@@ -232,6 +241,18 @@ let shopPage = async (req,res) => {
     res.status(404).send(error.message)
   }
 }
+
+const getProfile = async (req, res) => {
+try {
+  const user = req.user;
+
+  res.render('/profile',user)
+} catch (error) {
+  
+}
+    
+}
+
 
 
 
@@ -248,5 +269,6 @@ module.exports = {
   home,
   profile,
   addproduct,
-  shopPage
+  shopPage,
+  getProfile
 };

@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", function () {
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav m-auto w-50 shadow-sm d-flex justify-content-evenly">
           <li class="nav-item">
-            <a class="nav-link active fw-bold" aria-current="page" href="blogPage">Home</a>
+            <a class="nav-link active fw-bold" aria-current="page" href="/">Home</a>
           </li>
           <li class="nav-item">
             <a class="nav-link fw-bold" href="profile">Profile</a>

@@ -8,7 +8,7 @@ router.post('/addproduct', addproduct);
 router.get('/data', getProduct);
 router.delete('/delete/:id',deleteData);
 router.patch('/update/:id',updateData);
-// router.get("/shop",shopPage)
+
 
 
 module.exports = router;

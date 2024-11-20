@@ -26,7 +26,18 @@
     </style>
 </head>
 <body>
-    <header id="header"></header>
+    <header class="logo-head">
+        <div
+          class="container d-flex justify-content-between align-items-center py-3"
+        >
+          <!-- Logo Section -->
+          <div id="header"></div>
+  
+          <!-- Navigation Section -->
+          <div id="header"></div>
+        </div>
+      </header> 
+
     <section class="add-product d-flex justify-content-center align-items-center vh-100">
         <div class="container">
             <h2 class="text-center mb-4">Add Product</h2>
@@ -34,13 +45,19 @@
                 <div class="row mb-3">
                     <label for="productName" class="col-sm-2 col-form-label">Name</label>
                     <div class="col-sm-10 ">
-                        <input type="text" class="form-control" name="title" id="title" placeholder="Product Name">
+                        <input type="text" class="form-control" name="bookname" id="bookname" placeholder="Book Name">
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="author" class="col-sm-2 col-form-label">Author</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="author" id="author" placeholder="Book Author">
                     </div>
                 </div>
                 <div class="row mb-3">
                     <label for="productPrice" class="col-sm-2 col-form-label">Price</label>
                     <div class="col-sm-10">
-                        <input type="number" class="form-control" name="price" id="price" placeholder="Product Price">
+                        <input type="number" class="form-control" name="price" id="price" placeholder="Book Price">
                     </div>
                 </div>
                 <div class="row mb-3">
@@ -52,7 +69,7 @@
                 <div class="row mb-3">
                     <label for="productImage" class="col-sm-2 col-form-label">Image</label>
                     <div class="col-sm-10">
-                        <input type="url" name="productImage" id="productImage">
+                        <input type="url" name="image" id="productImage">
                     </div>
                 </div>
                 <div class="row">
@@ -64,37 +81,7 @@
         </div>
     </section>
 
-    <script>
-        document.getElementById('form').addEventListener('submit', (event) => {
-            event.preventDefault();
-
-
-                const product = {
-                    title: document.getElementById("title").value,
-                    price: document.getElementById("price").value,
-                    description: document.getElementById("description").value,
-                    image: document.getElementById("productImage").value
-                };
-                Add(product);
-
-            });
-
-            let Add = (product)=>{
-            fetch('/product/addproduct',{
-                method : 'POST',
-                headers : {'Content-Type':'application/json'},
-                body : JSON.stringify(product)
-            }).then(()=>get())
-        }
-
-            // let getdata = async()=>{
-            //     req = await fetch('/product/data')
-            //     res = await req.json();
-            //     uimaker(data)
-            //     console.log(res)    
-            // }
-
-    </script>
+    
 
     <!-- swiper slider  -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>

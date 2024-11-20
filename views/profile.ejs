@@ -1,74 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <!-- swiper slider  -->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
-    />
-    <!-- font awesome cdn  -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-    />
-    <!-- bootstrap -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <!-- css  -->
-    <link rel="stylesheet" href="../assets/css/style.css"/>
-  </head>
-  <body>
-    <section class="page">
-      <header class="logo-head">
-        <div
-          class="container d-flex justify-content-between align-items-center py-3"
-        >
-          <!-- Logo Section -->
-          <div id="header"></div>
-  
-          <!-- Navigation Section -->
-          <div id="header"></div>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile</title>
+  <!-- font awesome cdn -->
+  <link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+/>
+<!-- bootstrap -->
+<link
+  href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+  rel="stylesheet"
+/>
+<!-- custom css -->
+<link rel="stylesheet" href="../assets/css/style.css" />
+</head>
+<body>
+
+  <header class="logo-head">
+    <div class="container d-flex justify-content-between align-items-center py-3">
+      <!-- Logo Section -->
+      <div id="header"></div>
+
+      <!-- Navigation Section -->
+      <div id="header"></div>
+    </div>
+  </header>
+
+  <div class="container py-5">
+    <div class="profile-container bg-white p-4 rounded shadow">
+      <div class="profile-header d-flex align-items-center mb-4">
+        <img
+          src="<%= user.picture %>"
+          alt="Profile Picture"
+          class="rounded-circle me-3"
+          style="width: 100px; height: 100px; object-fit: cover;"
+        />
+        <div>
+          <h3><%= user.name %></h3>
+          <p class="text-muted mb-1"><%= user.username %></p>
+          <span class="badge bg-primary">email: <%= user.email %></span>
         </div>
-      </header>
+      </div>
+      <hr />
+      <h5>Account Information</h5>
+      <p><strong>Username:</strong> <%= user.username %></p>
+      <p><strong>Email:</strong> <a href="mailto:<%= user.email %>"><%= user.email %></a></p>
+      <p><strong>Password:</strong> <%= user.password %></p>
+    </div>
+  </div>
 
 
-      <section class="blogs mt-5">
-        <center>
-          <div class="container-blog">
-            <div class="blog-content">
-              <% if (Array.isArray(user) && user.length) { %>
-                <% user.forEach((user) => { %>
-                  <h3 name="title"><%= user.name %></h3>
-                  <div class="date mb-3">
-                    <%= user.username %>
-                  </div>
-                  <div class="description mt-5">
-                    <p><%= user.email %></p>
-                  </div>
-                <% }) %>
-              <% } else { %>
-                <p>No users found.</p>
-              <% } %>
-            </div>
-          </div>
-        </center>
-      </section>
-    </section>
 
-    <!-- swiper slider  -->
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <!-- slider  -->
-    <script src="../assets/js/slider.js"></script>
-    <!-- bootstrap  -->
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-    ></script>
-    <!-- header.js  -->
-    <script src="../assets/js/header.js"></script>
-  </body>
+
+
+
+
+
+
+
+
+
+
+   <!-- bootstrap -->
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+   <!-- minimal.js  -->
+   <script src="../assets/js/minimal.js"></script>
+   <!-- header.js -->
+   <script src="../assets/js/header.js"></script>
+</body>
 </html>
+

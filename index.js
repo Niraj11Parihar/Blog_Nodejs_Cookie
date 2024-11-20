@@ -8,6 +8,7 @@ const passport = require('passport');
 const session = require('express-session');
 const fs = require('fs');
 const flash = require('connect-flash/lib/flash');
+const cookieparser = require('cookie-parser')
 
 const app = express();
 app.set('view engine', 'ejs');
@@ -28,9 +29,15 @@ app.use(session({
 // flash message 
 app.use(flash());
 
-// passport.js 
-app.use(passport.initialize());
-app.use(passport.session());
+// middleware for flash messages 
+app.use((req, res, next) => {
+    res.locals.success_message = req.flash('logged-in');
+    next();
+  });
+  
+
+// cookieparser
+app.use(cookieparser());
 
 // router called 
 app.use(router);
