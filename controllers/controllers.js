@@ -8,7 +8,7 @@ const secretKey = 'your-secret-key';
 
 const loginpage = async (req, res) => {
   try {
-    res.redirect("/login");
+    res.render("login");
   } catch (error) {
     console.log(error);
     res.send("Unable to render login page");
