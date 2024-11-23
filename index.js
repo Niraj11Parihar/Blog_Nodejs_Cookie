@@ -4,9 +4,7 @@ const path = require('path');
 const router = require('./routers/routers');
 const p_router = require('./routers/product.router');
 const bodyParser = require('body-parser');
-const passport = require('passport');
 const session = require('express-session');
-const fs = require('fs');
 const flash = require('connect-flash/lib/flash');
 const cookieparser = require('cookie-parser')
 
