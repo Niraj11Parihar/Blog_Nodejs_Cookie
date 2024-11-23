@@ -9,6 +9,7 @@ const flash = require('connect-flash/lib/flash');
 const cookieparser = require('cookie-parser')
 
 const app = express();
+const port = process.env.PORT || 4185;
 app.set('views', path.join(__dirname, 'views')); 
 app.set('view engine', 'ejs');
 
@@ -44,11 +45,11 @@ app.use("/product", p_router);
 
 db;
 
-app.listen(4185, (err) => {
+app.listen(port, (err) => {
     if (!err) {
-        console.log('Express connected at http://localhost:4185');
+        console.log('Express connected at http://localhost:',port);
     } else {
-        console.log('Express not connected at http://localhost:4185');
+        console.log('Express not connected at http://localhost:',port);
         return false;
     }
 });
