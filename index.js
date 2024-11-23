@@ -9,8 +9,8 @@ const flash = require('connect-flash/lib/flash');
 const cookieparser = require('cookie-parser')
 
 const app = express();
-app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views')); 
+app.set('view engine', 'ejs');
 
 // bodyparse urlencoded and public/uploads 
 app.use(express.json())

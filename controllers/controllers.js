@@ -33,7 +33,7 @@ const loginProcess = async (req, res, next) => {
 
     // Generate a JWT token
     const token = jwt.sign(
-      { id: user._id, email: user.email, username: user.username, password: user.password, name: user.name },
+      { id: user._id, email: user.email, username: user.username, name: user.name },
       secretKey,
       { expiresIn: '5h' }
     );
