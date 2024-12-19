@@ -36,9 +36,6 @@ document.addEventListener("DOMContentLoaded", function () {
           <li class="nav-item">
             <a class="nav-link active fw-bold" aria-current="page" href="/">Home</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link fw-bold" href="profile">Profile</a>
-          </li>
           <li class="nav-item dropdown">
             <a
               class="nav-link dropdown-toggle fw-bold"
@@ -84,13 +81,6 @@ document.addEventListener("DOMContentLoaded", function () {
       </div>
     </div>
   </nav>
-
-  <!-- Profile Button -->
-  <div class="profile-btn">
-    <a href="profile" class="btn rounded-circle d-flex align-items-center justify-content-center" style="width: 50px; height: 50px; position: absolute; top: 15px; right: 15px; background-color: #4CAF50; color: white; font-size: 24px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); transition: all 0.3s ease;">
-      <i class="fa fa-user"></i>
-    </a>
-  </div>
   `;
 
   header.innerHTML = element;
