@@ -21,14 +21,17 @@
     "redis": "^4.7.0"
   },
   "scripts": {
-    "dev":"nodemon index.js",
-    "start": "node index.js"
+    "dev": "nodemon index.js",
+    "start": "node index.js",
+    "build": "webpack --mode production"
   },
   "name": "blog_nodejs_cookie",
   "version": "1.0.0",
   "main": "index.js",
   "devDependencies": {
-    "nodemon": "^3.1.7"
+    "nodemon": "^3.1.7",
+    "webpack": "^5.97.1",
+    "webpack-cli": "^5.1.4"
   },
   "keywords": [],
   "author": "",
